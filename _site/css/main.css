@@ -211,7 +211,13 @@ a:visited { color: #205caa; }
 .post-content > * { margin: 20px 0; }
 
 
-.post-content h1,
+.post-content h1 {
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 200;
+}
+
+
 .post-content h2,
 .post-content h3,
 .post-content h4,

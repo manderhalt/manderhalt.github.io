@@ -7,6 +7,68 @@
     <atom:link href="http://manderhalt.github.io//feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Create Weather Tiles from OpenMeteoForecast</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://openmeteoforecast.org/wiki/Main_Page&quot;&gt;OpenMeteoForecast&lt;/a&gt; is a project ruled by the &lt;a href=&quot;http://openmeteofoundation.org/&quot;&gt;OpenMeteoFundation&lt;/a&gt;. It provides open numerical weather forecasts over Europe with the WRF-ARW model on a 12 km grid.&lt;/p&gt;
+
+&lt;p&gt;The model runs 4 times a day for the next 72 hours with hourly predictions. Data can be accessed through &lt;a href=&quot;http://www.opendap.org/&quot;&gt;OPeNDAP server&lt;/a&gt; or by downloading &lt;a href=&quot;http://dap.ometfn.net/&quot;&gt;NetCDF files&lt;/a&gt; directly from the server.&lt;/p&gt;
+
+&lt;p&gt;Spatial gridded data arrays are beautiful but they can be easily enhanced by creating tile layers on a map powered by &lt;img src=&quot;/images/logos/leaflet.png&quot; alt=&quot;Leaflet&quot; style=&quot;height:25px;margin-bottom:-5px&quot; /&gt;. That’s what we are going to do!&lt;/p&gt;
+
+&lt;script src=&quot;http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js&quot;&gt;&lt;/script&gt;
+
+&lt;div id=&quot;map&quot;&gt; &lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;data.json&quot;&gt;&lt;/script&gt;
+
+&lt;div id=&quot;map&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    var map = L.map(&#39;map&#39;).setView([47, 3], 3);
+    L.tileLayer(&#39;http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;, {
+            maxZoom: 18
+            }).addTo(map);
+
+    L.tileLayer(&#39;http://localhost:8080/src/2014-06-28-Create-Weather-Tiles-from-OpenMeteoForecast/tile/{z}/{x}/{y}.png&#39;,{tms: true}).addTo(map);
+
+&lt;/script&gt;
+
+&lt;h1 id=&quot;load-data-from-the-opendap-serveropendap-server-site&quot;&gt;Load data from the &lt;a href=&quot;http://www.opendap.org/&quot;&gt;OPeNDAP server&lt;/a&gt;&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://openmeteoforecast.org/wiki/Main_Page&quot;&gt;OpenMeteoForecast&lt;/a&gt; &lt;a href=&quot;http://www.opendap.org/&quot;&gt;OPeNDAP server&lt;/a&gt; provides a list of all available simulations.&lt;/p&gt;
+
+&lt;p&gt;Two solutions for us:
+1. Download directly a &lt;code&gt;.nc&lt;/code&gt; file
+2. Parse a &lt;code&gt;.nc&lt;/code&gt; file to get only the data we need with the server API.&lt;/p&gt;
+
+&lt;p&gt;Each &lt;code&gt;.nc&lt;/code&gt; file weights 280 Mo. So the second one seems to be the best one!&lt;/p&gt;
+
+&lt;p&gt;First, import the following useful python packages. If they are not already installed, use &lt;a href=&quot;https://pip.pypa.io/en/latest/installing.html&quot;&gt;pip&lt;/a&gt; or another package manager.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bs4&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BeautifulSoup&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;urllib2&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, parse the content of the server webpage to get all available simulations files names. In order to do this, I use &lt;a href=&quot;http://www.crummy.com/software/BeautifulSoup/&quot;&gt;BeautifulSoup&lt;/a&gt; and some regular expressions to filter html results.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;reg_grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;eu12-pp&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;reg_ext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;$nc&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;reg_date&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;[20]\d\d\d\d\d\d\d\d\d&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;urlopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;http://dap.ometfn.net/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Parse the html page of the server to find available files&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;soup&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BeautifulSoup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;soup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;href&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Filter noisy names with regular expressions&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;files2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;files&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reg_grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;endswith&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;.nc&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;And the winner is: &amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When I wrote this post, the file &lt;code&gt;http://dap.omd.li/eu12-pp_2014062806_72.nc&lt;/code&gt; was available, but files are deleted every day on the server for storage space reasons. Use the previous chunck to get an available file name!&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 28 Jun 2014 17:30:00 +0200</pubDate>
+        <link>http://manderhalt.github.io//leaflet/2014/06/28/Create-Weather-Tiles-from-OpenMeteoForecast/</link>
+        <guid isPermaLink="true">http://manderhalt.github.io//leaflet/2014/06/28/Create-Weather-Tiles-from-OpenMeteoForecast/</guid>
+      </item>
+    
+      <item>
         <title>Create a basic d3 chart</title>
         <description>&lt;p&gt;This post explains how to embed d3 chart in &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; with &lt;a href=&quot;http://d3js.org/&quot;&gt;d3&lt;/a&gt;&lt;/p&gt;
 
