@@ -4,13 +4,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Welcome to Jekyll!</title>
+    <title>Create a basic map with Leaflet</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
-    <link rel="canonical" href="http://manderhalt.github.io//jekyll/update/2014/06/28/welcome-to-jekyll/">
+    <link rel="canonical" href="http://manderhalt.github.io//leaflet/2014/06/28/Create-a-basic-map-with-Leaflet/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
+
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 
 </head>
 
@@ -32,7 +34,7 @@
 
   <div class="wrap">
 
-    <a class="site-title" href="/">Mathieu Anderhalt Page</a>
+    <a class="site-title" href="/">mathieu anderhalt</a>
 
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -67,23 +69,51 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Welcome to Jekyll!</h1>
+    <h1>Create a basic map with Leaflet</h1>
     <p class="meta">Jun 28, 2014</p>
   </header>
 
   <article class="post-content">
-  <p>You’ll find this post in your <code>_posts</code> directory - edit this post and re-build (or run with the <code>-w</code> switch) to see your changes!
-To add new posts, simply add a file in the <code>_posts</code> directory that follows the convention: YYYY-MM-DD-name-of-post.ext.</p>
+  <p>This post explains in a nutshell how to create maps with <a href="http://leafletjs.com">Leaflet</a></p>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">&quot;Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">&#39;Tom&#39;</span><span class="p">)</span>
-<span class="c1">#=&gt; prints &#39;Hi, Tom&#39; to STDOUT.</span></code></pre></div>
+<div id="map"> </div>
 
-<p>Check out the <a href="http://jekyllrb.com">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>.</p>
+<script type="text/javascript">
+      var map = L.map('map').setView([47, 0.9], 6);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: 'Map data (c) <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+
+
+</script>
+
+<p>First, include the <code>.css</code> and the <code>.js</code> in the <code>&lt;head&gt;</code> section of your <code>.html</code> page,</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+    ...
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span></code></pre></div>
+
+<p>and create a <code>div</code>element.</p>
+
+<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;map&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/div&gt;</span></code></pre></div>
+
+<p>With the following lines, create the map and add it to the <code>div</code> element that has been previously created.</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">).</span><span class="nx">setView</span><span class="p">([</span><span class="mi">47</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="nx">L</span><span class="p">.</span><span class="nx">tileLayer</span><span class="p">(</span><span class="s1">&#39;http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;</span><span class="p">,</span>
+    <span class="p">{</span>
+        <span class="nx">maxZoom</span><span class="o">:</span> <span class="mi">18</span><span class="p">,</span>
+      <span class="p">}).</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
 
 
   </article>
@@ -96,11 +126,11 @@ To add new posts, simply add a file in the <code>_posts</code> directory that fo
 
   <div class="wrap">
 
-    <h2 class="footer-heading">Mathieu Anderhalt Page</h2>
+    <h2 class="footer-heading">mathieu anderhalt</h2>
 
     <div class="footer-col-1 column">
       <ul>
-        <li>Mathieu Anderhalt Page</li>
+        <li>mathieu anderhalt</li>
         <li><a href="mailto:mathieu.anderhalt@gmail.com">mathieu.anderhalt@gmail.com</a></li>
       </ul>
     </div>
