@@ -2,6 +2,30 @@
 /* ----------------------------------------------------------*/
 #map { height: 400px; }
 
+/*GROW*/
+.pic {
+  border: 10px solid #fff;
+  height: 100px;
+  width: 300px;
+  margin: 0px;
+  overflow: hidden;
+}
+.grow img {
+  height: 100px;
+  width: 300px;
+  margin-left: 0px;
+
+  -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+}
+
+.grow img:hover {
+    margin-top: -10px;
+}
+
 * {
   margin: 0;
   padding: 0;

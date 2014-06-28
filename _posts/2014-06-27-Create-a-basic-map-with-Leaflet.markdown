@@ -6,7 +6,7 @@ categories: Leaflet
 ---
 This post explains in a nutshell how to create maps with [Leaflet][leaflet-site]
 
-{% include map.html %}
+{% include posts/2014-06-27-Create-a-basic-map-with-Leaflet.html %}
 
 First, include the `.css` and the `.js` in the `<head>` section of your `.html` page,
 
@@ -42,5 +42,6 @@ With the following lines, create the map and add it to the `div` element that ha
 </script>
 
 {% endhighlight %}
+
 
 [leaflet-site]: http://leafletjs.com

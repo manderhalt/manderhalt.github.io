@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Create a basic map with Leaflet</title>
+    <title>Create a basic d3 chart</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
-    <link rel="canonical" href="http://manderhalt.github.io//leaflet/2014/06/28/Create-a-basic-map-with-Leaflet/">
+    <link rel="canonical" href="http://manderhalt.github.io//d3/2014/06/28/Create-a-basic-d3-chart/">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -69,51 +69,110 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Create a basic map with Leaflet</h1>
+    <h1>Create a basic d3 chart</h1>
     <p class="meta">Jun 28, 2014</p>
   </header>
 
   <article class="post-content">
-  <p>This post explains in a nutshell how to create maps with <a href="http://leafletjs.com">Leaflet</a></p>
+  <p>This post explains how to embed d3 chart in <a href="http://jekyllrb.com/">Jekyll</a> with <a href="http://d3js.org/">d3</a></p>
 
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<style>
 
-<div id="map"> </div>
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
 
-<script type="text/javascript">
-      var map = L.map('map').setView([47, 0.9], 6);
+.node {
+  fill: #000;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
 
-L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          attribution: 'Map data (c) <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-      }).addTo(map);
+.node.a { fill: #1f77b4; }
+.node.b { fill: #ff7f0e; }
+.node.c { fill: #2ca02c; }
 
+</style>
 
+<div id="chart">
+
+</div>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var width = 300,
+    height = 200;
+
+var color = d3.scale.category10();
+
+var nodes = [],
+    links = [];
+
+var force = d3.layout.force()
+    .nodes(nodes)
+    .links(links)
+    .charge(-400)
+    .linkDistance(120)
+    .size([width, height])
+    .on("tick", tick);
+
+var svg = d3.select("div#chart").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var node = svg.selectAll(".node"),
+    link = svg.selectAll(".link");
+
+// 1. Add three nodes and three links.
+setTimeout(function() {
+  var a = {id: "a"}, b = {id: "b"}, c = {id: "c"};
+  nodes.push(a, b, c);
+  links.push({source: a, target: b}, {source: a, target: c}, {source: b, target: c});
+  start();
+}, 0);
+
+// 2. Remove node B and associated links.
+setTimeout(function() {
+  nodes.splice(1, 1); // remove b
+  links.shift(); // remove a-b
+  links.pop(); // remove b-c
+  start();
+}, 3000);
+
+// Add node B back.
+setTimeout(function() {
+  var a = nodes[0], b = {id: "b"}, c = nodes[1];
+  nodes.push(b);
+  links.push({source: a, target: b}, {source: b, target: c});
+  start();
+}, 6000);
+
+function start() {
+  link = link.data(force.links(), function(d) { return d.source.id + "-" + d.target.id; });
+  link.enter().insert("line", ".node").attr("class", "link");
+  link.exit().remove();
+
+  node = node.data(force.nodes(), function(d) { return d.id;});
+  node.enter().append("circle").attr("class", function(d) { return "node " + d.id; }).attr("r", 8);
+  node.exit().remove();
+
+  force.start();
+}
+
+function tick() {
+  node.attr("cx", function(d) { return d.x; })
+      .attr("cy", function(d) { return d.y; })
+
+  link.attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+}
 
 </script>
-
-<p>First, include the <code>.css</code> and the <code>.js</code> in the <code>&lt;head&gt;</code> section of your <code>.html</code> page,</p>
-
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
-    ...
-    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;/head&gt;</span></code></pre></div>
-
-<p>and create a <code>div</code>element.</p>
-
-<div class="highlight"><pre><code class="html"><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;map&quot;</span><span class="nt">&gt;</span> <span class="nt">&lt;/div&gt;</span></code></pre></div>
-
-<p>With the following lines, create the map and add it to the <code>div</code> element that has been previously created.</p>
-
-<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="s1">&#39;map&#39;</span><span class="p">).</span><span class="nx">setView</span><span class="p">([</span><span class="mi">47</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="mi">6</span><span class="p">);</span>
-    <span class="nx">L</span><span class="p">.</span><span class="nx">tileLayer</span><span class="p">(</span><span class="s1">&#39;http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;</span><span class="p">,</span>
-    <span class="p">{</span>
-        <span class="nx">maxZoom</span><span class="o">:</span> <span class="mi">18</span><span class="p">,</span>
-      <span class="p">}).</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span></code></pre></div>
 
 
   </article>

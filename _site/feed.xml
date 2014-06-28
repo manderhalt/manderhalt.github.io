@@ -7,6 +7,114 @@
     <atom:link href="http://manderhalt.github.io//feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Create a basic d3 chart</title>
+        <description>&lt;p&gt;This post explains how to embed d3 chart in &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; with &lt;a href=&quot;http://d3js.org/&quot;&gt;d3&lt;/a&gt;&lt;/p&gt;
+
+&lt;style&gt;
+
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node {
+  fill: #000;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.node.a { fill: #1f77b4; }
+.node.b { fill: #ff7f0e; }
+.node.c { fill: #2ca02c; }
+
+&lt;/style&gt;
+
+&lt;div id=&quot;chart&quot;&gt;
+
+&lt;/div&gt;
+
+&lt;script src=&quot;http://d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+
+var width = 300,
+    height = 200;
+
+var color = d3.scale.category10();
+
+var nodes = [],
+    links = [];
+
+var force = d3.layout.force()
+    .nodes(nodes)
+    .links(links)
+    .charge(-400)
+    .linkDistance(120)
+    .size([width, height])
+    .on(&quot;tick&quot;, tick);
+
+var svg = d3.select(&quot;div#chart&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+var node = svg.selectAll(&quot;.node&quot;),
+    link = svg.selectAll(&quot;.link&quot;);
+
+// 1. Add three nodes and three links.
+setTimeout(function() {
+  var a = {id: &quot;a&quot;}, b = {id: &quot;b&quot;}, c = {id: &quot;c&quot;};
+  nodes.push(a, b, c);
+  links.push({source: a, target: b}, {source: a, target: c}, {source: b, target: c});
+  start();
+}, 0);
+
+// 2. Remove node B and associated links.
+setTimeout(function() {
+  nodes.splice(1, 1); // remove b
+  links.shift(); // remove a-b
+  links.pop(); // remove b-c
+  start();
+}, 3000);
+
+// Add node B back.
+setTimeout(function() {
+  var a = nodes[0], b = {id: &quot;b&quot;}, c = nodes[1];
+  nodes.push(b);
+  links.push({source: a, target: b}, {source: b, target: c});
+  start();
+}, 6000);
+
+function start() {
+  link = link.data(force.links(), function(d) { return d.source.id + &quot;-&quot; + d.target.id; });
+  link.enter().insert(&quot;line&quot;, &quot;.node&quot;).attr(&quot;class&quot;, &quot;link&quot;);
+  link.exit().remove();
+
+  node = node.data(force.nodes(), function(d) { return d.id;});
+  node.enter().append(&quot;circle&quot;).attr(&quot;class&quot;, function(d) { return &quot;node &quot; + d.id; }).attr(&quot;r&quot;, 8);
+  node.exit().remove();
+
+  force.start();
+}
+
+function tick() {
+  node.attr(&quot;cx&quot;, function(d) { return d.x; })
+      .attr(&quot;cy&quot;, function(d) { return d.y; })
+
+  link.attr(&quot;x1&quot;, function(d) { return d.source.x; })
+      .attr(&quot;y1&quot;, function(d) { return d.source.y; })
+      .attr(&quot;x2&quot;, function(d) { return d.target.x; })
+      .attr(&quot;y2&quot;, function(d) { return d.target.y; });
+}
+
+&lt;/script&gt;
+
+</description>
+        <pubDate>Sat, 28 Jun 2014 13:30:52 +0200</pubDate>
+        <link>http://manderhalt.github.io//d3/2014/06/28/Create-a-basic-d3-chart/</link>
+        <guid isPermaLink="true">http://manderhalt.github.io//d3/2014/06/28/Create-a-basic-d3-chart/</guid>
+      </item>
+    
+      <item>
         <title>Create a basic map with Leaflet</title>
         <description>&lt;p&gt;This post explains in a nutshell how to create maps with &lt;a href=&quot;http://leafletjs.com&quot;&gt;Leaflet&lt;/a&gt;&lt;/p&gt;
 
