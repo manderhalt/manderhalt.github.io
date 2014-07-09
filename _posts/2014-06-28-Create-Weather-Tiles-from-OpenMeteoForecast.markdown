@@ -3,6 +3,7 @@ layout: post
 title:  "Create Weather Tiles from OpenMeteoForecast"
 date:   2014-06-28 15:30:00
 categories: Leaflet
+comments: true
 ---
 
 [OpenMeteoForecast][OpenMeteoForecast-Site] is a project ruled by the [OpenMeteoFundation][OpenMeteoFundation-Site]. It provides open numerical weather forecasts over Europe with the WRF-ARW model on a 12 km grid.
@@ -12,17 +13,13 @@ The model runs 4 times a day for the next 72 hours with hourly predictions. Data
 Spatial gridded data arrays are beautiful but they can be easily enhanced by creating tile layers on a map powered by ![Leaflet](/images/logos/leaflet.png){: style="height:25px;margin-bottom:-5px"}. That's what we are going to do!
 
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<div id="map"> </div>
 <script type="text/javascript" src="data.json"></script>
-<div id="map"></div>
+<div id="map"> </div>
 <script type="text/javascript">
     var map = L.map('map').setView([47, 3], 3);
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18
-            }).addTo(map);
-
-    L.tileLayer('http://localhost:8080/src/2014-06-28-Create-Weather-Tiles-from-OpenMeteoForecast/tile/{z}/{x}/{y}.png',{tms: true}).addTo(map);
-
+            }).addTo(map);    L.tileLayer('http://localhost:8080/src/2014-06-28-Create-Weather-Tiles-from-OpenMeteoForecast/tile/{z}/{x}/{y}.png',{tms: true,opacity: 0.8}).addTo(map);
 </script>
 
 
@@ -48,7 +45,7 @@ from urllib2 import urlopen
 
 Then, parse the content of the server webpage to get all available simulations files names. In order to do this, I use [BeautifulSoup][BeautifulSoup-Site] and some regular expressions to filter html results.
 
-{% highlight python %}
+{% highlight python linenos=table %}
 
 reg_grid = re.compile('eu12-pp')
 reg_ext = re.compile('$nc')

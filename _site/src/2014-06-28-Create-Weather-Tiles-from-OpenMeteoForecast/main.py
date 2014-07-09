@@ -56,10 +56,11 @@ def CreateWeatherTile(weather_var,weather):
     fig = plt.imshow(data['temperature'],cm.GMT_haxby,alpha=0.5)
     fig.axes.get_xaxis().set_visible(False)
     fig.axes.get_yaxis().set_visible(False)
-    plt.savefig(os.path.join('temperature'+'.png'),bbox_inches='tight',pad_inches=0)
+    plt.savefig(os.path.join('temperature.png'),bbox_inches='tight',pad_inches=0)
 
-    command_translate = "gdal_translate -a_srs '+proj=lcc +lon_0=4 +lat_0=47.5 +lat_1=47.5 +lat_2=47.5 +a=6370000. +b=6370000. +no_defs' -a_ullr -2963997.87057 -1848004.2008 2964000.82884 1848004.09676 " + os.path.join(temp,name+'.png') + " " + os.path.join(temp,name+'.tif')
-    command_tile = "/Users/Mathieu/anaconda/bin/gdal2tiles.py --config GDAL_DATA " + GDAL_DATA + " --profile=mercator -z 3-6 " + os.path.join(temp,name+'.tif') +  " " + os.path.join(TilesServer,'OpenMeteoForecast',weather_var,name)
+    command_translate = "gdal_translate -a_srs '+proj=lcc +lon_0=4 +lat_0=47.5 +lat_1=47.5 +lat_2=47.5 +a=6370000. +b=6370000. +no_defs' -a_ullr -2963997.87057 -1848004.2008 2964000.82884 1848004.09676 " + os.path.join('temperature.png') + " " + os.path.join('temperature.tif')
+
+    command_tile = "/Users/Mathieu/anaconda/bin/gdal2tiles.py --config GDAL_DATA " + GDAL_DATA + " --profile=mercator -z 1-8 " + os.path.join('temperature.tif') +  " " + os.path.join('./tile')
 
     os.system(command_translate)
     os.system(command_tile)

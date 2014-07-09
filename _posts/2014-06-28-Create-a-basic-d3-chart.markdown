@@ -3,6 +3,7 @@ layout: post
 title:  "Create a basic d3 chart"
 date:   2014-06-28 11:30:52
 categories: d3
+comments: true
 ---
 This post explains how to embed d3 chart in [Jekyll][Jekyll-site] with [d3][d3-site]
 

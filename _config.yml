@@ -1,11 +1,13 @@
 # Site settings
 title: mathieu anderhalt
 email: mathieu.anderhalt@gmail.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+description: "Website under construction. Description is coming soon. "
 baseurl: ""
 url: "http://manderhalt.github.io/"
+username: "manderhalt"
 
 # Build settings
+pygments: true
 markdown: kramdown
 permalink: pretty
 exclude: [node_modules, Gruntfile.js, package.json]

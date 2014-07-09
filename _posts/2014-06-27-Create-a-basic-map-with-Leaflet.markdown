@@ -3,6 +3,7 @@ layout: post
 title:  "Create a basic map with Leaflet"
 date:   2014-06-27 23:08:52
 categories: Leaflet
+comments: true
 ---
 This post explains in a nutshell how to create maps with [Leaflet][leaflet-site]
 
@@ -42,6 +43,8 @@ With the following lines, create the map and add it to the `div` element that ha
 </script>
 
 {% endhighlight %}
+
+hello
 
 
 [leaflet-site]: http://leafletjs.com
