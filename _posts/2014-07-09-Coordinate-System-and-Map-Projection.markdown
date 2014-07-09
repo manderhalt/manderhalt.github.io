@@ -24,7 +24,7 @@ var svg = d3.select("div#chart").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("europ.json", function(error, europe) {
+d3.json("data/europe.json", function(error, europe) {
   if (error) return console.error(error);
 
   svg.insert("path", ".graticule")
