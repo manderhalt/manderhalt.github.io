@@ -7,6 +7,48 @@
     <atom:link href="http://manderhalt.github.io//feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Coordinate Systems and Map Projections</title>
+        <description>&lt;p&gt;Coordinate systems and map projections&lt;/p&gt;
+
+&lt;div id=&quot;chart&quot;&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;http://d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;http://d3js.org/topojson.v1.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+
+var width = 960,
+    height = 700;
+
+var path = d3.geo.path()
+    .projection(null);
+
+var svg = d3.select(&quot;div#chart&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+d3.json(&quot;europ.json&quot;, function(error, europe) {
+  if (error) return console.error(error);
+
+  svg.insert(&quot;path&quot;, &quot;.graticule&quot;)
+      .datum(topojson.feature(europe, europe.objects.continent_Europe_subunits))
+      .attr(&quot;class&quot;, &quot;land&quot;)
+      .attr(&quot;d&quot;, path);
+});
+
+d3.select(self.frameElement).style(&quot;height&quot;, height + &quot;px&quot;);
+
+&lt;/script&gt;
+
+</description>
+        <pubDate>Wed, 09 Jul 2014 20:57:52 +0200</pubDate>
+        <link>http://manderhalt.github.io//gis/2014/07/09/Coordinate-System-and-Map-Projection/</link>
+        <guid isPermaLink="true">http://manderhalt.github.io//gis/2014/07/09/Coordinate-System-and-Map-Projection/</guid>
+      </item>
+    
+      <item>
         <title>Create Weather Tiles from OpenMeteoForecast</title>
         <description>&lt;p&gt;&lt;a href=&quot;https://openmeteoforecast.org/wiki/Main_Page&quot;&gt;OpenMeteoForecast&lt;/a&gt; is a project ruled by the &lt;a href=&quot;http://openmeteofoundation.org/&quot;&gt;OpenMeteoFundation&lt;/a&gt;. It provides open numerical weather forecasts over Europe with the WRF-ARW model on a 12 km grid.&lt;/p&gt;
 
@@ -226,6 +268,8 @@ L.tileLayer(&#39;http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;, {
         &lt;span class=&quot;nx&quot;&gt;maxZoom&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
       &lt;span class=&quot;p&quot;&gt;}).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addTo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;hello&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 28 Jun 2014 01:08:52 +0200</pubDate>
