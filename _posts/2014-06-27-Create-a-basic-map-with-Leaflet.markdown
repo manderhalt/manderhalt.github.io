@@ -4,6 +4,8 @@ title:  "Create a basic map with Leaflet"
 date:   2014-06-27 23:08:52
 categories: Leaflet
 comments: true
+post_view: 2014-06-27-Create-a-basic-map-with-Leaflet.png
+publish: true
 ---
 This post explains in a nutshell how to create maps with [Leaflet][leaflet-site]
 

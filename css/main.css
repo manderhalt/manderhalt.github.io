@@ -14,6 +14,8 @@
   height: 100px;
   width: 300px;
   margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 10px;
 
   -webkit-transition: all 0.5s ease;
      -moz-transition: all 0.5s ease;

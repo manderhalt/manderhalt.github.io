@@ -4,6 +4,8 @@ title:  "Create Weather Tiles from OpenMeteoForecast"
 date:   2014-06-28 15:30:00
 categories: Leaflet
 comments: true
+post_view: 2014-06-28-Create-Weather-Tiles-from-OpenMeteoForecast.png
+publish: false
 ---
 
 [OpenMeteoForecast][OpenMeteoForecast-Site] is a project ruled by the [OpenMeteoFundation][OpenMeteoFundation-Site]. It provides open numerical weather forecasts over Europe with the WRF-ARW model on a 12 km grid.
