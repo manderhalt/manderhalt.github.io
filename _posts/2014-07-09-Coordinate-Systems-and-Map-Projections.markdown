@@ -22,8 +22,7 @@ To sort out coordinates systems, the [EPSG][epsg] reference has been created. It
 
 
 {% include posts/2014-07-09-Coordinate-Systems-and-Map-Projections.html %}
-Animation by [mbostock][gistproj] 
-
+Animation by [mbostock][gistproj]
 
 [gistproj]:http://bl.ocks.org/mbostock/3711652
 [epsg]: http://www.epsg.org/

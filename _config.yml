@@ -11,3 +11,5 @@ pygments: true
 markdown: kramdown
 permalink: pretty
 exclude: [node_modules, Gruntfile.js, package.json,sandbox]
+gems:
+  - jekyll-sitemap
