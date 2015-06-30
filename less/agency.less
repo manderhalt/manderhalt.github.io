@@ -1,47 +1,6 @@
 @import "variables.less";
 @import "mixins.less";
 
-// clients
-.imgClientEdf {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/edf_0.png") no-repeat;
-	}
-.imgClientEdf:hover {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/edf_1.png") no-repeat;
-	}
-.imgClientVeolia {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/veolia_0.png") no-repeat;
-	}
-.imgClientVeolia:hover {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/veolia_1.png") no-repeat;
-	}
-.imgClient55 {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/55_0.png") no-repeat;
-	}
-.imgClient55:hover {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/55_1.png") no-repeat;
-	}
-.imgClientCredoc {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/credoc_0.png") no-repeat;
-	}
-.imgClientCredoc:hover {
-	width:200px;
-	height:100px;
-	background: url("../img/logos/credoc_1.png") no-repeat;
-	}
 
 // Global Components
 
@@ -566,7 +525,15 @@ section {
 
 aside.clients {
 	img {
-		margin: 50px auto;
+		width:200px;
+		height:100px;
+		margin: 10px auto;
+		filter: grayscale(100%);
+		-webkit-filter: grayscale(100%);
+	}
+	img:hover{
+		filter:none;
+		-webkit-filter: none;
 	}
 }
 
