@@ -70,13 +70,16 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#Space">Space</a>
+                        <a class="page-scroll" href="#skills">Skills</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#portfolio">Portfolio</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#companies">Companies</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
@@ -101,11 +104,11 @@
     </header>
 
     <!-- Services Section -->
-    <section id="Space">
+    <section id="skills">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Space</h2>
+                    <h2 class="section-heading">Skills</h2>
                     <h3 class="section-subheading text-muted">What I can do and what I like to do! </h3>
                 </div>
             </div>
@@ -339,10 +342,11 @@
                         </li>
                         <li class="timeline-inverted wow bounceIn" data-wow-delay=".1s">
                             <div class="timeline-image">
-                                <h4>To Be
-                                    <br>Continued
-                                    <br>...</h4>
-                                </div>
+                                <h4>
+                                <i class="fa fa-cogs fa-5x fa-fw"></i>
+                                </h4>
+
+                            </div>
                             </li>
                         </ul>
                     </div>
@@ -415,8 +419,14 @@
         </section>
         -->
         <!-- Clients Aside -->
-        <aside class="clients bg-light-gray">
+        <section id="companies" class="clients bg-light-gray">
             <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Companies</h2>
+                        <h3 class="section-subheading text-muted"> Companies I worked with or for </h3>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
                         <a href="http://www.edf.com/">
@@ -445,9 +455,9 @@
                     </div> -->
                 </div>
             </div>
-        </aside>
+        </section>
 
-        <!-- Contact Section
+        <!--Contact Section
         <section id="contact">
             <div class="container">
                 <div class="row">
@@ -492,36 +502,62 @@
             </div>
         </section>
         -->
-        <footer>
+        <section id="contact" class="nopadding">
             <div class="container">
-                <div class="row">
+                <div class="row text-center">
                     <div class="col-md-4">
-                        <span>
-                            <a href="mailto:mathieu.anderhalt@gmail.com">
-                                Contact me
-                            </a>
+                        <a href="mailto:mathieu.anderhalt@gmail.com">
+                        <span class="fa-stack fa-3x wow bounceIn" data-wow-delay=".1s">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-envelope fa-stack-1x fa-inverse faa-shake
+                             animated-hover"></i>
                         </span>
+                        </a>
+                        <h4 class="service-heading">Email</h4>
+                        <p class="text-muted">
+                            <a href="mailto:mathieu.anderhalt@gmail.com">
+                                mathieu.anderhalt@gmail.com
+                            </a>
+                        </p>
                     </div>
                     <div class="col-md-4">
-                        <ul class="list-inline social-buttons">
-                            <li>
-                                <a href="https://twitter.com/manderhalt">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/manderhalt">
-                                    <i class="fa fa-github"></i>
-                                </a>
-                            </li>
-                        </ul>
+                        <a href="https://twitter.com/manderhalt">
+                            <span class="fa-stack fa-3x wow bounceIn" data-wow-delay=".1s">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse faa-float animated-hover "></i>
+                            </span>
+                        </a>
+                        <h4 class="service-heading">Twitter</h4>
+                        <p class="text-muted">
+                            <a href="https://twitter.com/manderhalt">
+                                Twitter
+                            </a>
+                        </p>
                     </div>
                     <div class="col-md-4">
-                        <ul class="list-inline quicklinks">
-                            <li><a href="#">Credits</a>
-                            </li>
-                        </ul>
+                        <a href="https://github.com/manderhalt">
+                            <span class="fa-stack fa-3x wow bounceIn" data-wow-delay=".1s">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse faa-tada animated-hover"></i>
+                            </span>
+                        </a>
+                        <h4 class="service-heading">Github</h4>
+                        <p class="text-muted">
+                            <a href="https://github.com/manderhalt">
+                                Github
+                            </a>
+                        </p>
                     </div>
+                </div>
+
+            </div>
+        </section>
+        <footer>
+            <div class="row">
+                <div class="col-md-12 aligned-right">
+                    <a href="#CreditsModal" class="portfolio-link" data-toggle="modal">
+                        Credits
+                    </a>
                 </div>
             </div>
         </footer>
@@ -693,6 +729,31 @@ $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
                                     <p>Dreams is a free PSD web template built by <a href="https://www.behance.net/MathavanJaya">Mathavan Jaya</a>. Dreams is a modern one page web template designed for almost any purpose. It’s a beautiful template that’s designed with the Bootstrap framework in mind.</p>
                                     <p>You can download the PSD template in this portfolio sample item at <a href="http://freebiesxpress.com/gallery/dreams-free-one-page-web-template/">FreebiesXpress.com</a>.</p>
                                     <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Credits Modal -->
+            <div class="portfolio-modal modal fade" id="CreditsModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-content">
+                    <div class="close-modal" data-dismiss="modal">
+                        <div class="lr">
+                            <div class="rl">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div class="modal-body">
+                                    <!-- Project Details Go Here -->
+                                    <h2>Credits</h2>
+                                    <ul>
+                                        <li></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
