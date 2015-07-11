@@ -3,10 +3,13 @@
 
 
 // Global Components
-
+html {
+	height:100%;
+}
 body {
 	overflow-x: hidden;
 	.body-font;
+	height:100%;
 }
 
 .text-muted {
@@ -164,16 +167,28 @@ h1, h2, h3, h4, h5, h6 {
 
 header {
 	background-color: @gray-darkest;
-	background-image: url('../img/map-image.png');
+	//background-image: url('../img/map-image.png');
 	background-repeat: none;
 	background-attachment: scroll;
 	background-position: center center;
 	.background-cover;
 	text-align: center;
 	color: white;
+	height:100%;
+	.entete{
+		max-width:100%;
+		width:100%;
+		height:100%;
+		display:block;
+	}
 	.intro-text {
-		padding-top: 50px;
-		padding-bottom: 50px;
+		//padding-top: 50px;
+		//padding-bottom: 50px;
+		position:absolute;
+		top: 50%;  /* position the top  edge of the element at the middle of the parent */
+		left: 50%; /* position the left edge of the element at the middle of the parent */
+		transform: translate(-50%, -50%);
+		pointer-events: none;
 		.intro-lead-in {
 			.serif-font;
 			font-style: italic;
@@ -189,6 +204,19 @@ header {
 			margin-bottom: 25px;
 		}
 	}
+}
+
+.headermap{
+	display:block;
+	z-index:-1;
+
+}
+
+.subunit {
+	fill:white;
+	stroke:black;
+	fill-opacity:0.1;
+	stroke-opacity:0.2;
 }
 
 @media(min-width:768px) {
