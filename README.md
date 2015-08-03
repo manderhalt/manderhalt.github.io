@@ -1,4 +1,4 @@
-Mathieu Anderhalt web page http://www.manderhalt.github.io
+Mathieu Anderhalt web page http://manderhalt.github.io/
 
 Based on:
 [Start Bootstrap](http://startbootstrap.com/) - [Agency](http://startbootstrap.com/template-overviews/agency/)
