@@ -12,6 +12,13 @@ body {
 .text-primary {
   color: #41b6c4;
 }
+
+.blank-div{
+  margin-bottom: 50px;
+  margin-top:50px;
+}
+
+
 p {
   font-size: 14px;
   line-height: 1.75;
